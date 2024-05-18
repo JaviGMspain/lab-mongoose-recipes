@@ -16,44 +16,28 @@ mongoose
     // Before adding any recipes to the database, let's remove all existing ones
     return Recipe.deleteMany()
   })
-  .then(() => {
-    // Add a new recipe to the database
-    const newRecipe = {
-      title: "Asian Glazed Chicken Thighs",
-      level: "Amateur Chef",
-      ingredients: [
-        "1/2 cup rice vinegar",
-        "5 tablespoons honey",
-        "1/3 cup soy sauce (such as Silver Swan®)",
-        "1/4 cup Asian (toasted) sesame oil",
-        "3 tablespoons Asian chili garlic sauce",
-        "3 tablespoons minced garlic",
-        "salt to taste",
-        "8 skinless, boneless chicken thighs"
-      ],
-      cuisine: "Asian",
+  .then(() => 
+     Recipe.create({
+      title: "Tortilla de patata",
+      level: "Easy Peasy",
+      ingredients: ["potatoes", "eggs", "onion", "olive oil"],
+      cuisine: "Spanish",
       dishType: "main_course",
-      image: "https://images.media-allrecipes.com/userphotos/720x405/815964.jpg",
-      duration: 40,
-      creator: "Chef LePapu"
-    };
-
-    return Recipe.create(newRecipe);
-  })
-  .then(recipe => {
-    // Log the title of the newly inserted recipe
-    console.log(`Recipe created: ${recipe.title}`);
-  })
+      image: "https://images.media-allrecipes.com/images/75131.jpg",
+      duration: 30,
+      creator: "Chef Pepe",
+    })
+  )
+  .then((recipe) => console.log(recipe))
   .then(() => {
 
     return Recipe.insertMany(data);
   })
-  .then(recipes => {
-    recipes.forEach(recipe => console.log(`Recipe created: ${recipe.title}`));
+  .then((recipes) => {
+    recipes.forEach((data) => console.log(data.title));
     return Recipe.findOneAndUpdate(
       { title: "Rigatoni alla Genovese" },
       { duration: 100 },
-      { new: true }
     );
   })
   .then(updatedRecipe => {
